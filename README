@@ -1,17 +1,17 @@
-   DATA EXAMPLE:
-0  5   .1d0    20000.   0.e-3    0.0   1. 1.e-99 0.e0 1.e4  X  1 0  0.0 .70 0.3  1.e-13 0  10000 /IWR,N,DELTAT,TMAX ,step,soft,cmet,Clight, outfile,Ixc,Nbh ,spin, EPS, ivelocity, KSMX ! AT THE END OF THIS EXAMPLE FILE THERE ARE SOME EXPLANATIONS, please take a look!
+# DATA EXAMPLE:
+  0  5   .1d0    20000.   0.e-3    0.0   1. 1.e-99 0.e0 1.e4  X  1 0  0.0 .70 0.3  1.e-13 0  10000 /IWR,N,DELTAT,TMAX ,step,soft,cmet,Clight, outfile,Ixc,Nbh ,spin, EPS, ivelocity, KSMX ! AT THE END OF THIS EXAMPLE FILE THERE ARE SOME EXPLANATIONS, please take a look!
   1500000  0.  0.  0.  0.  0.  0. 0    m x y z vx vy vz  soft (and the same for all bodies)
   50000.  39.399994  9.299988  0. -.5800018  .97399998  0.  
   10.  191.  32.5  0. -.55600004  .84599991  0. 
   10.  189. -84.700012  0.  .0033600006  .0017600002  0. 
- 0  0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0  /STOP ; this would set N=4 even if in first line N=5 !! REMOVE THIS IF U WANT MORE BODIES
+  0  0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0  /STOP ; this would set N=4 even if in first line N=5 !! REMOVE THIS IF U WANT MORE BODIES
   10.  94.099976 -122.  0.  .90300007  .07999992  0. 
   10.  41.799988 -13.  0.  .04699993  0.964799976  0. 
   0  0  0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 /STOP | 
 
- PLEASE read these expalantions and ALSO look the comments in the code.
+# PLEASE read these expalantions and ALSO look the comments in the code.
 
- FIRST DATA LINE: 
+## FIRST DATA LINE: 
 
  UNITS: G=1,  I usually use Solar masses, astronomical units (AU), then the time is such that:  1 Year=2 Pi, i.e. years=time/twopi
 
@@ -51,19 +51,19 @@
  KSMX = tells how many (maximum) integration steps the code is at most allowd to take between outputs 
         (this avoidsi almost infinity loops is step has got an unreasonably small valuei, from which it may not recover)
 
----------   END OF FIRST DATA LINE EXPLANATION ----------------
+## ---------   END OF FIRST DATA LINE EXPLANATION ----------------
 
  AFTER the first line of data there is the list of masses and initial conditions
     m x y z  vx vy vz
  for all the bodies from 1 to N.
 
 
-c------------------------------------------------------------
+## ------------------------------------------------------------
 
  After finishin one simulation the code attempt to read data for the next one.
  It stops when the 1. line is zeros (actually if N<2).
 
-OUTPUT: (at the moment)
+# OUTPUT: (at the moment)
 
 The coordinates goto the OUTPUT file (coords for merged bodies get huge values for moviei/picture makingi i.e. they go out of figure)  
         write(66,234)time,
@@ -82,23 +82,23 @@ In addition orbital elements (Keplerian ones) are written to files 71, 72,.. 75 
  One may change the main program easily to get other quantities computed from the coords/vels that 'ARC' returns.
  Note that the number of bodies may change if the BH swollows some of them.
   
-  LIST OF SUBROUTINES & FUNCTIONS
+#  LIST OF SUBROUTINES & FUNCTIONS
 
-          subroutine ARCparams_Dot_CH_is_here ! This subroutine is not used, but the content is simply what is supposed to be in the file  ARCparams.CH.
-           Program ARCcode !  This is the main program, not subroutine.
-            subroutine Diagnostic output(time,xwr,cmxx)
-           subroutine Write Elements(time,iopen) ! with respect to M(1)
-        Subroutine MERGE_I1_I2(time)!Merge the colliding body with the BH, ('time' is here only for write(66....)
-          SUBROUTINE ARC ! This is the original Alforithmic Regularization Chain code.
-          subroutine Iterate2ExactTime(Y0,Nvar,deltaT,f1,d1,f2,d2,x1,x2)
+         subroutine ARCparams_Dot_CH_is_here ! This subroutine is not used, but the content is simply what is supposed to be in the file  ARCparams.CH.
+         Program ARCcode !  This is the main program, not subroutine.
+         subroutine Diagnostic output(time,xwr,cmxx)
+         subroutine Write Elements(time,iopen) ! with respect to M(1)
+         Subroutine MERGE_I1_I2(time)!Merge the colliding body with the BH, ('time' is here only for write(66....)
+         SUBROUTINE ARC ! This is the original Alforithmic Regularization Chain code.
+         subroutine Iterate2ExactTime(Y0,Nvar,deltaT,f1,d1,f2,d2,x1,x2)
          subroutine LEAPFROG(STEP,Leaps,stime) !Leapfroging steps for the Bulirsch-Stoer extrapolation
          function Wfunction() ! avluate the TTL-function for time tranformation !  not  subroutine
-          subroutine omegacoef ! coefficients in \Omega=sum omec(i,j)/r_{ij}
+         subroutine omegacoef ! coefficients in \Omega=sum omec(i,j)/r_{ij}
          SUBROUTINE XCMOTION(hs) ! movement of coordinates
          subroutine PUT V 2 W ! these parameters are needed if there are v-ependent forces
          subroutine Velocity Dependent Perturbations ! This name tells what this is!
          SUBROUTINE CHECK SWITCHING CONDITIONS(MUSTSWITCH)! Is it necessary to construct a new CHAIN?
-          SUBROUTINE FIND CHAIN INDICES ! Here the new indecies along the new CHAIN are obtained
+         SUBROUTINE FIND CHAIN INDICES ! Here the new indecies along the new CHAIN are obtained
          SUBROUTINE CHECK CONNECTION(IC,LMIN,LMAX,IJ,LI,SUC,LOOP) ! Loops in CHAIN are not allowed
          SUBROUTINE ARRANGE(N,Array,Indx) ! this is a sorting routine (needed in CHAIN construction)
          SUBROUTINE INITIALIZE XC AND WC  ! find CHAIN coordinates and velocities
@@ -114,20 +114,20 @@ In addition orbital elements (Keplerian ones) are written to files 71, 72,.. 75 
          subroutine Obtain Order of Y(SY) ! an attempt to obtain reasonable comparison values for
          SUBROUTINE EVALUATE X
          SUBROUTINE EVALUATE V(VN,WI)
-        SUBROUTINE Relativistic ACCELERATIONS(ACC,ACCGR,Va,spina,dspin)
-          subroutine Relativistic terms_not in use ! at the moment this is not used
-          subroutine Relativistic terms!_ in use ! this is used for PN-term accelarations
+         SUBROUTINE Relativistic ACCELERATIONS(ACC,ACCGR,Va,spina,dspin)
+         subroutine Relativistic terms_not in use ! at the moment this is not used
+         subroutine Relativistic terms!_ in use ! this is used for PN-term accelarations
          subroutine Reduce2cm(x,m,nb,cm)
-        subroutine cross(a,b,c)
-       subroutine gopu_SpinTerms(X,V,r,M1,m2,c,alpha,dv3,dalpha)
-        subroutine Q2term(m,r,x,v,c,Q2,e,dvq) ! Quadrupole as C. Will advised
+         subroutine cross(a,b,c)
+         subroutine gopu_SpinTerms(X,V,r,M1,m2,c,alpha,dv3,dalpha)
+         subroutine Q2term(m,r,x,v,c,Q2,e,dvq) ! Quadrupole as C. Will advised
          SUBROUTINE Initial Stepsize(X,V,M,NB,ee,step) ! guesswork for initial stepsize
          subroutine elmnts ! two-body orbital elements (WITHOUT relativistic corrections)
          function atn2(s,c) ! atan 4 interval (0,2Pi) !  not  subroutine
          function oot(alfa,eta,zeta,q,e,sqaf) ! oot=pericentre time !  not  subroutine
          function g3(z) !  not  subroutine 
          SUBROUTINE CONSTANTS OF MOTION(ENE_NB,G,Alag) ! Newtonian constants of motion (i.e. no PN)
-       SUBROUTINE FIND BINARIES(time)  ! this is a toy routine for finding binaries
+         SUBROUTINE FIND BINARIES(time)  ! this is a toy routine for finding binaries
          SUBROUTINE  WCMOTION(hs)  ! This routine evaluates the velocity jumps in leapfrog
          subroutine V_jump(WCj,spinj,cmvj,wttlj,WCi,spini,FCj,acc,dt,
          subroutine V_jACConly(WCj,CMVj,WTTLj,FC,acc,dt,
